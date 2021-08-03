@@ -14,29 +14,33 @@ import java.util.ArrayList;
 
 public class SecondActivity extends AppCompatActivity {
 
-	ListView lv;
+    ListView lv;
     ArrayList<Song> songList;
-	ArrayAdapter adapter;
-	String moduleCode;
-	int requestCode = 9;
+    //ArrayAdapter adapter;
+    String moduleCode;
+    int requestCode = 9;
     Button btn5Stars;
+    CustomAdapter caSong;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_second);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
 
         setTitle(getTitle().toString() + " ~ " +  getResources().getText(R.string.title_activity_second));
 
-		lv = (ListView) this.findViewById(R.id.lv);
+        lv = (ListView) this.findViewById(R.id.lv);
         btn5Stars = (Button) this.findViewById(R.id.btnShow5Stars);
 
-		DBHelper dbh = new DBHelper(this);
+        DBHelper dbh = new DBHelper(this);
         songList = dbh.getAllSongs();
         dbh.close();
 
-		adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, songList);
-		lv.setAdapter(adapter);
+		/*adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, songList);
+		lv.setAdapter(adapter);*/
+
+        caSong=new CustomAdapter(this, R.layout.row, songList);
+        lv.setAdapter(caSong);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -53,23 +57,23 @@ public class SecondActivity extends AppCompatActivity {
                 DBHelper dbh = new DBHelper(SecondActivity.this);
                 songList.clear();
                 songList.addAll(dbh.getAllSongsByStars(5));
-                adapter.notifyDataSetChanged();
+                caSong.notifyDataSetChanged();
             }
         });
     }
 
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == this.requestCode && resultCode == RESULT_OK){
-			DBHelper dbh = new DBHelper(this);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == this.requestCode && resultCode == RESULT_OK){
+            DBHelper dbh = new DBHelper(this);
             songList.clear();
             songList.addAll(dbh.getAllSongs());
             dbh.close();
-            adapter.notifyDataSetChanged();
-		}
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+            caSong.notifyDataSetChanged();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 
 }

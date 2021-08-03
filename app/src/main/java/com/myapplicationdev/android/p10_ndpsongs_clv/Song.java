@@ -4,20 +4,20 @@ import java.io.Serializable;
 
 public class Song implements Serializable {
 
-	private int id;
-	private String title;
-	private String singers;
-	private int yearReleased;
-	private int stars;
+    private int id;
+    private String title;
+    private String singers;
+    private int yearReleased;
+    private float stars;
 
-    public Song(String title, String singers, int yearReleased, int stars) {
+    public Song(String title, String singers, int yearReleased, float stars) {
         this.title = title;
         this.singers = singers;
         this.yearReleased = yearReleased;
         this.stars = stars;
     }
 
-    public Song(int id, String title, String singers, int yearReleased, int stars) {
+    public Song(int id, String title, String singers, int yearReleased, float stars) {
         this.id = id;
         this.title = title;
         this.singers = singers;
@@ -61,11 +61,11 @@ public class Song implements Serializable {
         return this;
     }
 
-    public int getStars() {
+    public float getStars() {
         return stars;
     }
 
-    public Song setStars(int stars) {
+    public Song setStars(float stars) {
         this.stars = stars;
         return this;
     }
@@ -73,17 +73,17 @@ public class Song implements Serializable {
     @Override
     public String toString() {
         String starsString = "";
-        if (stars == 5){
+      /*  if (stars == 5){
             starsString = "*****";
         } else if (stars == 4){
             starsString = "****";
-        }
+        }*/
 
         //or
         for(int i = 0; i < stars; i++){
             starsString += "*";
         }
-        return title + "\n" + singers + " - " + yearReleased + "\n" + starsString;
+        return starsString;
 
     }
 }

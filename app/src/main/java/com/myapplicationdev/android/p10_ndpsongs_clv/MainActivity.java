@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText etTitle, etSingers, etYear;
     Button btnInsert, btnShowList;
-    RadioGroup rg;
+    RatingBar rbStars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         etYear = findViewById(R.id.etYear);
         btnInsert = findViewById(R.id.btnInsertSong);
         btnShowList = findViewById(R.id.btnShowList);
-        rg = findViewById(R.id.rgStars);
+        rbStars = findViewById(R.id.ratingBar);
 
         btnInsert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String year_str = etYear.getText().toString().trim();
                 int year = Integer.valueOf(year_str);
-                int stars = getStars();
+                float stars = rbStars.getRating();
 
                 DBHelper dbh = new DBHelper(MainActivity.this);
                 long result = dbh.insertSong(title, singers, year, stars);
@@ -53,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     etTitle.setText("");
                     etSingers.setText("");
                     etYear.setText("");
-                } else {
+                }
+                else
+                {
                     Toast.makeText(MainActivity.this, "Insert failed", Toast.LENGTH_LONG).show();
                 }
 
@@ -71,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    private int getStars() {
+    /*private int getStars() {
         int stars = 1;
         switch (rg.getCheckedRadioButtonId()) {
             case R.id.radio1:
@@ -92,6 +94,5 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return stars;
-    }
-
+    }*/
 }

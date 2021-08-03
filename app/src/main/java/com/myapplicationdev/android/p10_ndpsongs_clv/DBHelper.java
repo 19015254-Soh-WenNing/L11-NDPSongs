@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	public long insertSong(String title, String singers, int year, int stars) {
+	public long insertSong(String title, String singers, int year, float stars) {
 		// Get an instance of the database for writing
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
